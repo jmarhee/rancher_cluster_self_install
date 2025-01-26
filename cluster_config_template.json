@@ -1,0 +1,81 @@
+{
+  "type": "provisioning.cattle.io.cluster",
+  "name": "$CLUSTER_NAME",
+  "metadata": {
+    "namespace": "fleet-default",
+    "name": "$CLUSTER_NAME",
+    "labels": { "tz": "$TIMEZONE", "env": "lab" }
+  },
+  "spec": {
+    "rkeConfig": {
+      "chartValues": {},
+      "upgradeStrategy": {
+        "controlPlaneConcurrency": "1",
+        "controlPlaneDrainOptions": {
+          "deleteEmptyDirData": true,
+          "disableEviction": false,
+          "enabled": false,
+          "force": false,
+          "gracePeriod": -1,
+          "ignoreDaemonSets": true,
+          "skipWaitForDeleteTimeoutSeconds": 0,
+          "timeout": 120
+        },
+        "workerConcurrency": "1",
+        "workerDrainOptions": {
+          "deleteEmptyDirData": true,
+          "disableEviction": false,
+          "enabled": false,
+          "force": false,
+          "gracePeriod": -1,
+          "ignoreDaemonSets": true,
+          "skipWaitForDeleteTimeoutSeconds": 0,
+          "timeout": 120
+        }
+      },
+      "dataDirectories": {
+        "systemAgent": "",
+        "provisioning": "",
+        "k8sDistro": ""
+      },
+      "machineGlobalConfig": {
+        "disable": ["traefik"],
+        "disable-cloud-controller": "false",
+        "disable-kube-proxy": "false",
+        "disable-scheduler": "false",
+        "etcd-expose-metrics": "false",
+        "disable-apiserver": "false",
+        "disable-controller-manager": "false",
+        "disable-etcd": "false",
+        "disable-network-policy": "false",
+        "secrets-encryption": "false"
+      },
+      "machineSelectorConfig": [
+        {
+          "config": {
+            "protect-kernel-defaults": "false",
+            "selinux": "false",
+            "docker": "false"
+          }
+        }
+      ],
+      "etcd": {
+        "disableSnapshots": false,
+        "s3": null,
+        "snapshotRetention": 5,
+        "snapshotScheduleCron": "0 \\*/5 \\* \\* \\*"
+      },
+      "registries": { "configs": {}, "mirrors": {} },
+      "additionalManifest": "$ADDITIONAL_MANIFESTS",
+      "machinePools": []
+    },
+    "machineSelectorConfig": [{ "config": {} }],
+    "kubernetesVersion": "$K3S_VERSION",
+    "defaultPodSecurityAdmissionConfigurationTemplateName": "",
+    "localClusterAuthEndpoint": {
+      "enabled": false,
+      "caCerts": "",
+      "fqdn": ""
+    }
+  }
+}
