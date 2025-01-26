@@ -85,3 +85,111 @@ spec:
                 name: argocd-server
                 port:
                   name: https
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-system
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: istio-base
+  namespace: kube-system
+spec:
+  repo: https://istio-release.storage.googleapis.com/charts
+  chart: base
+  targetNamespace: istio-system
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: istio-istiod
+  namespace: kube-system
+spec:
+  repo: https://istio-release.storage.googleapis.com/charts
+  chart: istiod
+  targetNamespace: istio-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-ingress
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: istio-ingress
+  namespace: kube-system
+spec:
+  repo: https://istio-release.storage.googleapis.com/charts
+  chart: gateway
+  targetNamespace: istio-ingress
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: external-secrets
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: external-secrets
+  namespace: kube-system
+spec:
+  repo: https://charts.external-secrets.io
+  chart: external-secrets
+  targetNamespace: external-secrets
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cattle-logging-system
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: rancher-logging-crd
+  namespace: kube-system
+spec:
+  repo: https://charts.rancher.io
+  chart: rancher-logging-crd
+  targetNamespace: cattle-logging-system
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: rancher-logging
+  namespace: kube-system
+spec:
+  repo: https://charts.rancher.io
+  chart: rancher-logging
+  targetNamespace: cattle-logging-system
+  valuesContent: |-
+    logging:
+      enabled: true
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cattle-monitoring-system
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: rancher-logging-crd
+  namespace: kube-system
+spec:
+  repo: https://charts.rancher.io
+  chart: rancher-monitoring-crd
+  targetNamespace: cattle-monitoring-system
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: rancher-logging
+  namespace: kube-system
+spec:
+  repo: https://prometheus-community.github.io/helm-charts
+  chart: kube-prometheus-stack
+  targetNamespace: cattle-monitoring-system
