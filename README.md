@@ -12,8 +12,8 @@ You will need the following variables either set in the environment, or in the s
 
 ```bash
 RANCHER_API_URL="https://<your rancher URL>" # Do not include a /v1 or /v3 uri
-RANCHER_ACCESS_KEY="token-bvq48"
-RANCHER_SECRET_KEY="7g4t2xxb84qqlxs2rlzclkbww5brgh79qnmm5v8cmc8r8dlvhqlqt4"
+RANCHER_ACCESS_KEY="token-xxxxx"
+RANCHER_SECRET_KEY="xxxxxxxxxxxxx"
 ```
 and the `K3S_VERSION` desired.
 
