@@ -177,7 +177,7 @@ metadata:
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
-  name: rancher-logging-crd
+  name: rancher-monitoring-crd
   namespace: kube-system
 spec:
   repo: https://charts.rancher.io
@@ -187,7 +187,7 @@ spec:
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
-  name: rancher-logging
+  name: rancher-monitoring
   namespace: kube-system
 spec:
   repo: https://prometheus-community.github.io/helm-charts
