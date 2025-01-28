@@ -45,7 +45,7 @@ metadata:
   namespace: kube-system
 spec:
   repo: https://argoproj.github.io/argo-helm
-  chart: argo
+  chart: argo-cd
   targetNamespace: argocd
   valuesContent: |-
     global:
