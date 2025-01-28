@@ -17,24 +17,6 @@ spec:
   set:
   valuesContent: |-
     fullnameOverride: ingress-nginx
-    controller:
-      kind: DaemonSet
-      hostNetwork: false
-      hostPort:
-        enabled: false
-        ports:
-          http: 80
-          https: 443
-      service:
-        enabled: false
-      publishService:
-        enabled: false
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: false
-      config:
-        use-forwarded-headers: true
 ---
 apiVersion: v1
 kind: Namespace
