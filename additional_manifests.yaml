@@ -19,9 +19,12 @@ spec:
     fullnameOverride: ingress-nginx
     controller:
       kind: DaemonSet
-      hostNetwork: true
+      hostNetwork: false
       hostPort:
-        enabled: true
+        enabled: false
+        ports:
+          http: 80
+          https: 443
       service:
         enabled: false
       publishService:
