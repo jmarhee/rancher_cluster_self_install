@@ -54,6 +54,9 @@ spec:
     certificate:
       enabled: true
 
+    crds:
+      install: true
+
     server:
       insecure: true
       ingress:
