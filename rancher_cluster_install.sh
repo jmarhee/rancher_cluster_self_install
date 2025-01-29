@@ -2,12 +2,17 @@
 
 # Variables
 export CLUSTER_NAME="$(hostname)"
-export ARGOCD_FQDN="argocd.$CLUSTER_NAME.organization.tld"
 export K3S_VERSION="v1.30.7+k3s1"
+# Set Variables either in env outside scripts as exports, or manually here:
+# export RANCHER_API_URL="https://rancher.your.organization.tld" # Do not set /v1 or /v3 URI here
+# export RANCHER_ACCESS_KEY="token-xxxx"
+# export RANCHER_SECRET_KEY="xxxx"
+# export ARGOCD_FQDN=""
+
 
 #Build Config
-export ADDITIONAL_MANIFESTS="$(awk '{printf "%s\\n", $0}' additional_manifests.yaml)"
 ROLES="--etcd --controlplane --worker"
+export ADDITIONAL_MANIFESTS="$(awk '{printf "%s\\n", $0}' additional_manifests.yaml | sed -e 's|ARGOCD_FQDN|\$ARGOCD_FQDN|g' | envsubst)"
 CLUSTER_CONFIG=$(cat cluster_config_template.json) # | awk '{print}' ORS='" ')
 RENDERED_CONFIG=$(echo $CLUSTER_CONFIG | envsubst)
 

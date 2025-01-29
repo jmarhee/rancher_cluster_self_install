@@ -14,9 +14,23 @@ spec:
   repo: https://kubernetes.github.io/ingress-nginx
   targetNamespace: ingress-nginx
   version: v4.11.2
-  set:
   valuesContent: |-
     fullnameOverride: ingress-nginx
+    controller:
+      kind: DaemonSet
+      hostNetwork: true
+      hostPort:
+        enabled: true
+      service:
+        enabled: false
+      publishService:
+        enabled: false
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: false
+      config:
+        use-forwarded-headers: true
 ---
 apiVersion: v1
 kind: Namespace
@@ -34,7 +48,7 @@ spec:
   targetNamespace: argocd
   valuesContent: |-
     global:
-      domain: ${ARGOCD_FDQN}
+      domain: ARGOCD_FQDN
 
     certificate:
       enabled: true
@@ -42,15 +56,23 @@ spec:
     crds:
       install: true
 
+    configs:
+      params:
+        server.insecure: true
+
     server:
       insecure: true
       ingress:
         enabled: true
-        ingressClassName: nginx
         annotations:
           nginx.ingress.kubernetes.io/force-ssl-redirect: true
-          nginx.ingress.kubernetes.io/ssl-passthrough: true
-        tls: true
+          nginx.ingress.kubernetes.io/backend-protocol: HTTP
+          nginx.ingress.kubernetes.io/rewrite-target: /
+        labels: {}
+        ingressClassName: "nginx"
+        hosts:
+        - ARGOCD_FQDN
+        https: true
 ---
 apiVersion: v1
 kind: Namespace
@@ -76,21 +98,6 @@ spec:
   repo: https://istio-release.storage.googleapis.com/charts
   chart: istiod
   targetNamespace: istio-system
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: istio-ingress
----
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
-  name: istio-ingress
-  namespace: kube-system
-spec:
-  repo: https://istio-release.storage.googleapis.com/charts
-  chart: gateway
-  targetNamespace: istio-ingress
 ---
 apiVersion: v1
 kind: Namespace
