@@ -69,7 +69,7 @@ spec:
           nginx.ingress.kubernetes.io/backend-protocol: HTTP
           nginx.ingress.kubernetes.io/rewrite-target: /
         labels: {}
-        ingressClassName: "nginx"
+        ingressClassName: nginx
         hosts:
         - ARGOCD_FQDN
         https: true
