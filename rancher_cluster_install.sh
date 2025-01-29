@@ -13,7 +13,7 @@ export K3S_VERSION="v1.30.7+k3s1"
 #Build Config
 ROLES="--etcd --controlplane --worker"
 export ADDITIONAL_MANIFESTS="$(awk '{printf "%s\\n", $0}' additional_manifests.yaml | sed -e 's|ARGOCD_FQDN|\$ARGOCD_FQDN|g' | envsubst)"
-CLUSTER_CONFIG=$(cat cluster_config_template.json) # | awk '{print}' ORS='" ')
+CLUSTER_CONFIG=$(cat cluster_config_template.json)
 RENDERED_CONFIG=$(echo $CLUSTER_CONFIG | envsubst)
 
 # Create a new K3s cluster in Rancher
